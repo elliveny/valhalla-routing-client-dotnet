@@ -8,6 +8,30 @@ A production-ready .NET client library for the [Valhalla](https://github.com/val
 
 ✅ **Production Ready** - All core endpoints have been implemented and tested. The API surface is stable.
 
+## About This Project
+
+### AI-Driven Development Experiment
+
+This project represents an experiment in **specification-driven development using AI tools**. The entire codebase—from design to implementation—was created through a collaborative process between AI assistants and human review.
+
+**Development Timeline:**
+- **Day 1:** Initial [specification.md](docs/specification/specification.md) created using ChatGPT, then refined through multiple rounds of review using GitHub Copilot (Claude Opus 4.5 model)
+- **Days 2-3:** Phased implementation with continuous agent and human review at each stage
+- **Post-development:** Agent review validated specification against code, resulting in refinements to both
+
+**Key Philosophy:**
+
+The [specification.md](docs/specification/specification.md) file serves as the **definitive source of truth** for this project. It is intended that:
+
+1. **Specification leads development** - Changes to requirements should update the specification first
+2. **Code follows specification** - Implementation should be derived from the specification document
+3. **Continuous evolution** - Both specification and code evolve together, with the specification maintaining the authoritative design
+4. **AI-assisted workflow** - While human input is valued, the project encourages using AI tools to translate specification updates into code changes
+
+This approach aims to create a codebase that can be reliably regenerated, understood, and extended from its written specification with AI assistance.
+
+💡 **For Contributors:** When proposing changes, consider updating [specification.md](docs/specification/specification.md) first. See our [contribution guidelines](CONTRIBUTING.md) for details on the recommended workflow.
+
 ## Supported Endpoints
 
 This client library provides support for the following Valhalla API endpoints:
@@ -222,13 +246,16 @@ Contributions are welcome! Please read our [contribution guidelines](CONTRIBUTIN
 
 ### Development Guidelines
 
-1. Follow the [.NET Best Practices](docs/dotnet-best-practices.md)
-2. Follow the [Testing Guidelines](docs/testing-guidelines.md) when writing tests
-3. Use the [Interface Design Template](docs/interface-design-template.md) for new interfaces
-4. Write comprehensive XML documentation
-5. Include unit tests for all new functionality
-6. Ensure integration tests pass
-7. Keep changes focused and minimal
+1. **Read the [specification.md](docs/specification/specification.md) first** - Understand the authoritative design
+2. **Update specification for significant changes** - Propose specification updates before implementing new features
+3. Follow the [.NET Best Practices](docs/dotnet-best-practices.md)
+4. Follow the [Testing Guidelines](docs/testing-guidelines.md) when writing tests
+5. Use the [Interface Design Template](docs/interface-design-template.md) for new interfaces
+6. Write comprehensive XML documentation
+7. Include unit tests for all new functionality
+8. Ensure integration tests pass
+9. Keep changes focused and minimal
+10. **Consider using AI tools** - Leverage AI assistants for implementation, but always apply human review
 
 ### Code Review Focus
 

@@ -25,6 +25,56 @@ This project adheres to a code of conduct adapted from the Contributor Covenant.
 - Focus on what is best for the community
 - Show empathy towards other community members
 
+## Development Philosophy
+
+### Specification-First Development
+
+This project follows a **specification-driven development approach** where the [specification.md](docs/specification/specification.md) document serves as the authoritative source for all design and implementation decisions.
+
+**Why This Matters:**
+
+1. **Single Source of Truth** - The specification defines what the code should do and how it should be structured
+2. **Maintainability** - Future developers (and AI assistants) can understand the complete system from the specification
+3. **Consistency** - Design decisions are documented and can be referenced during implementation
+4. **Regenerability** - The codebase can theoretically be regenerated from the specification using AI tools
+
+### AI-Assisted Workflow
+
+This project was built entirely using AI tools (ChatGPT, GitHub Copilot with Claude Opus 4.5), and we encourage contributors to continue this approach:
+
+**Recommended Workflow:**
+
+1. **Update Specification First**
+   - Propose changes to [specification.md](docs/specification/specification.md) before writing code
+   - Ensure the specification clearly describes the intended behavior
+   - Get specification changes reviewed and approved
+
+2. **AI-Assisted Implementation**
+   - Use AI coding assistants (GitHub Copilot, Cursor, ChatGPT, Claude, etc.) to generate implementation from the updated specification
+   - Let AI tools handle boilerplate, tests, and documentation generation
+   - Review AI-generated code carefully for correctness and quality
+
+3. **Human Review**
+   - Always review AI-generated changes with human judgment
+   - Verify security, performance, and correctness
+   - Ensure changes align with project standards
+
+4. **Iterative Refinement**
+   - Use AI tools to address review feedback
+   - Refine both code and specification as needed
+   - Maintain alignment between specification and implementation
+
+**This Does Not Mean:**
+- Human-written code is discouraged (it's perfectly acceptable!)
+- You must use AI tools to contribute (but it's encouraged)
+- AI output should be merged without review (always apply human judgment)
+
+**This Does Mean:**
+- Consider how changes fit into the specification
+- Documentation-first thinking is valued
+- Leverage AI to handle repetitive or boilerplate tasks
+- Maintain the specification as changes evolve
+
 ## Getting Started
 
 ### Prerequisites
@@ -68,10 +118,13 @@ This project adheres to a code of conduct adapted from the Contributor Covenant.
 
 Before contributing, familiarize yourself with:
 
-- [Project Specification](docs/specification/specification.md) - Complete implementation requirements
+- **[Project Specification](docs/specification/specification.md)** - **START HERE!** This is the authoritative source that defines all requirements, design decisions, and implementation details
 - [.NET Best Practices](docs/dotnet-best-practices.md) - Coding standards and guidelines
+- [Testing Guidelines](docs/testing-guidelines.md) - Unit and integration test best practices
 - [Interface Design Template](docs/interface-design-template.md) - Interface design patterns
 - [Quick Reference](docs/quick-reference.md) - Common patterns cheat sheet
+
+**Important:** The specification.md file is not just documentation—it's the **source of truth** for this project. When in doubt about design decisions, refer to the specification first.
 
 ## Development Workflow
 
@@ -88,15 +141,43 @@ git checkout -b feature/your-feature-name
 
 ### Making Changes
 
-1. **Write code** following the [coding standards](#coding-standards)
-2. **Write tests** for your changes
-3. **Update documentation** if needed
-4. **Commit your changes** with clear, descriptive messages
+1. **Consider specification updates** - For significant changes, update [specification.md](docs/specification/specification.md) first
+2. **Write code** following the [coding standards](#coding-standards)
+3. **Write tests** for your changes
+4. **Update documentation** if needed
+5. **Commit your changes** with clear, descriptive messages
 
 ```bash
 git add .
 git commit -m "feat: add support for new endpoint"
 ```
+
+### Types of Contributions
+
+#### 1. Bug Fixes
+For simple bug fixes:
+- Write tests that reproduce the bug
+- Fix the code
+- Verify tests pass
+- Update specification.md if the bug reveals a specification gap
+
+#### 2. New Features
+For new features or significant changes:
+- **Start with specification.md** - Propose the design in the specification first
+- Get feedback on the specification changes
+- Implement the feature (consider using AI tools)
+- Write comprehensive tests
+- Update other documentation (README, etc.)
+
+#### 3. Documentation Updates
+- Keep specification.md aligned with code
+- Update inline XML documentation
+- Improve README and guides as needed
+
+#### 4. Refactoring
+- Ensure specification.md still accurately describes behavior
+- Maintain test coverage
+- Document any architectural changes in specification.md
 
 ### Commit Message Convention
 
@@ -300,10 +381,11 @@ Task<RouteResponse> RouteAsync(
 
 1. ✅ Ensure all tests pass
 2. ✅ Verify no compiler warnings
-3. ✅ Update documentation
-4. ✅ Add/update tests for your changes
-5. ✅ Rebase on latest upstream/main
-6. ✅ Write clear commit messages
+3. ✅ Update [specification.md](docs/specification/specification.md) if applicable (for new features or significant changes)
+4. ✅ Update other documentation (README, inline docs, etc.)
+5. ✅ Add/update tests for your changes
+6. ✅ Rebase on latest upstream/main
+7. ✅ Write clear commit messages
 
 ### Creating a Pull Request
 
@@ -342,6 +424,12 @@ Fixes #123
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
+- [ ] Specification update
+
+## Specification Changes
+- [ ] specification.md updated (if applicable)
+- [ ] No specification changes needed
+- [ ] Specification already covers this change
 
 ## Testing
 - [ ] Unit tests added/updated
