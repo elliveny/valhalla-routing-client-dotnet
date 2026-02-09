@@ -30,7 +30,7 @@
 
   <!-- Package metadata (only applied to packable projects) -->
   <PropertyGroup Condition="'$(IsPackable)' == 'true'">
-    <Version>0.1.3</Version>
+    <Version>0.1.4</Version>
     <Authors>Elliveny</Authors>
     <Company>Elliveny</Company>
     <Product>Valhalla Routing Client for .NET</Product>

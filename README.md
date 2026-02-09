@@ -35,11 +35,13 @@ This client library provides support for the following Valhalla API endpoints:
 
 ## Installation
 
-*Coming soon to NuGet*
+[![NuGet](https://img.shields.io/nuget/v/Valhalla.Routing.Client.svg)](https://www.nuget.org/packages/Valhalla.Routing.Client)
 
 ```bash
 dotnet add package Valhalla.Routing.Client
 ```
+
+> **Pre-release:** This library is in active development (0.x). The API is stable but may have minor changes before v1.0. Feedback welcome!
 
 ## Quick Start
 

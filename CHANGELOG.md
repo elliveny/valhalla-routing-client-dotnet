@@ -55,6 +55,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Release History
 
+### [0.1.4] - 2026-02-09
+
+Documentation and branding:
+- Updated package icon
+- Updated README with NuGet badge and pre-release notice
+
 ### [0.1.3] - 2026-02-09
 
 Packaging fix:
@@ -84,7 +90,8 @@ Initial release with support for:
 - Comprehensive XML documentation
 - .NET 6.0 and .NET 8.0 support
 
-[Unreleased]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/elliveny/valhalla-routing-client-dotnet/releases/tag/v0.1.1
