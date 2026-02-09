@@ -14,7 +14,7 @@ We are committed to addressing security vulnerabilities in the following version
 
 Instead, please report security vulnerabilities by email to:
 
-**security@elliveny.com** (or the appropriate contact email)
+**security@elliveny.com**
 
 You should receive a response within 48 hours. If for some reason you do not, please follow up via GitHub to ensure we received your original message.
 
