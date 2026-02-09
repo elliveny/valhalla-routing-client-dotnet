@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Multi-target .NET 6.0 and .NET 8.0 -->
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    
+    <!-- Root namespace -->
+    <RootNamespace>Valhalla.Routing.Client.Tests</RootNamespace>
+    
+    <!-- Suppress CA1707 for test methods - underscores are standard in test names -->
+    <!-- Suppress CA2007 for test methods - xUnit handles its own synchronization context -->
+    <!-- Suppress SA1600 for test methods - test method names are self-documenting -->
+    <!-- Suppress CA1869 for test methods - creating JsonSerializerOptions per test is acceptable -->
+    <!-- Suppress CA1849 for test methods - synchronous CancellationTokenSource.Cancel is acceptable in tests -->
+    <!-- Suppress SA1202 for test classes - helper methods before test methods can be more readable -->
+    <!-- Suppress CS1591 for test methods - XML comments not required for test methods -->
+    <!-- Suppress CA1515 for test classes - test classes must be public for test discovery -->
+    <NoWarn>$(NoWarn);CA1707;CA2007;SA1600;CA1869;CA1849;SA1202;CS1591;CA1515</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Test framework packages -->
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+    
+    <!-- Test utilities -->
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="RichardSzalay.MockHttp" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="FluentAssertions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reference to the main library -->
+    <ProjectReference Include="..\..\src\Valhalla.Routing.Client\Valhalla.Routing.Client.csproj" />
+  </ItemGroup>
+
+</Project>
+

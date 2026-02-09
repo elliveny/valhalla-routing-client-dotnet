@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Valhalla.Routing.Client/Valhalla.Routing.Client.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Valhalla.Routing.Client.Tests/Valhalla.Routing.Client.Tests.csproj" />
+  </Folder>
+</Solution>

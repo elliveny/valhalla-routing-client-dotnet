@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        dotnet-version: [ '6.0.x', '8.0.x' ]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+    
+    - name: Run unit tests
+      run: dotnet test --no-build --configuration Release --filter "Category!=Integration" --verbosity normal --framework net${{ matrix.dotnet-version == '6.0.x' && '6.0' || '8.0' }} --collect:"XPlat Code Coverage"
+    
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v4
+      if: matrix.dotnet-version == '8.0.x'
+      with:
+        fail_ci_if_error: false
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: build
+    # Only run integration tests on main branch pushes, not PRs (they take a while)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET 8.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+    
+    - name: Start Valhalla container
+      run: docker compose -f docker-compose.integration.yml up -d
+    
+    - name: Wait for Valhalla to be ready
+      run: |
+        echo "Waiting for Valhalla to build tiles and start (this may take several minutes)..."
+        timeout 600 bash -c 'until curl -sf http://localhost:8002/status; do sleep 10; echo "Waiting..."; done'
+        echo "Valhalla is ready!"
+    
+    - name: Run integration tests
+      run: dotnet test --no-build --configuration Release --filter "Category=Integration" --verbosity normal --framework net8.0
+    
+    - name: Stop Valhalla container
+      if: always()
+      run: docker compose -f docker-compose.integration.yml down

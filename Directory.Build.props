@@ -1,0 +1,86 @@
+<Project>
+  
+  <!-- Common properties for all projects in the solution -->
+  <PropertyGroup>
+    <!-- Target frameworks -->
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    
+    <!-- Build settings -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    
+    <!-- Documentation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- CS1591: Missing XML comment for publicly visible type or member -->
+    <!-- Enforced as error via TreatWarningsAsErrors to ensure all public APIs are documented -->
+    
+    <!-- Deterministic builds -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    
+    <!-- Source control -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <!-- Package metadata (only applied to packable projects) -->
+  <PropertyGroup Condition="'$(IsPackable)' == 'true'">
+    <Version>0.1.0</Version>
+    <Authors>Elliveny</Authors>
+    <Company>Elliveny</Company>
+    <Product>Valhalla Routing Client for .NET</Product>
+    <Description>A production-ready .NET client library for the Valhalla routing engine HTTP API.</Description>
+    <Copyright>Copyright © 2026 Elliveny</Copyright>
+    <PackageProjectUrl>https://github.com/elliveny/valhalla-routing-client-dotnet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/elliveny/valhalla-routing-client-dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>valhalla;routing;navigation;mapping;directions;map-matching;gps;openstreetmap</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReleaseNotes>See CHANGELOG.md for release notes</PackageReleaseNotes>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- Code analysis rules -->
+  <PropertyGroup>
+    <!-- Enable strict analysis -->
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    
+    <!-- Disable specific rules that don't apply to this library -->
+    <!-- CA1303: Do not pass literals as localized parameters - not applicable for English-only library -->
+    <NoWarn>$(NoWarn);CA1303</NoWarn>
+    
+    <!-- SA1633: File must have header - disabled as we don't use file headers (LICENSE covers the repo) -->
+    <NoWarn>$(NoWarn);SA1633</NoWarn>
+    
+    <!-- CA1848: Use LoggerMessage delegates - suggestion only -->
+    <!-- This is handled by the .editorconfig file -->
+  </PropertyGroup>
+
+  <!-- Dependencies for all projects -->
+  <ItemGroup>
+    <!-- StyleCop analyzers -->
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- StyleCop configuration -->
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <!-- Source link for debugging -->
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+</Project>

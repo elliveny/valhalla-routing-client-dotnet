@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  valhalla:
+    image: ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+    ports:
+      - "8002:8002"
+    volumes:
+      - valhalla-tiles:/custom_files  # Named volume for tile persistence
+    environment:
+      - tile_urls=https://download.geofabrik.de/europe/luxembourg-latest.osm.pbf
+      - serve_tiles=True
+      - build_admins=True
+      - build_time_zones=True
+      - force_rebuild=False  # Skip rebuild if tiles already exist
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 180s  # Allow up to 3 minutes for initial tile build
+
+volumes:
+  valhalla-tiles:  # Persists between docker-compose up/down

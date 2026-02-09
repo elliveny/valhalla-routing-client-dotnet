@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Multi-target .NET 6.0 and .NET 8.0 -->
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+
+    <!-- Mark as packable for NuGet -->
+    <IsPackable>true</IsPackable>
+
+    <!-- Root namespace -->
+    <RootNamespace>Valhalla.Routing</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Expose internals to test project -->
+    <InternalsVisibleTo Include="Valhalla.Routing.Client.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Required dependencies for DI and logging abstractions -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+  </ItemGroup>
+
+  <!-- Polyfills for .NET 6.0 to support required keyword -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="PolySharp" Version="1.14.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
