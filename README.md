@@ -164,8 +164,6 @@ See [samples/README.md](samples/README.md) for detailed documentation.
 - 📐 [Interface Design Template](docs/interface-design-template.md) - Interface design patterns
 - 🚀 [Quick Reference](docs/quick-reference.md) - Quick cheat sheet for common patterns
 - 🤖 [Agent Instructions](.github/agents/README.md) - AI assistant guidance
-- 📝 [Documentation Review](docs/DOCUMENTATION_REVIEW.md) - Comprehensive pre-coding review
-- ✅ [Development Checklist](docs/DEVELOPMENT_CHECKLIST.md) - Phase-by-phase implementation guide
 
 ## Development Setup
 
