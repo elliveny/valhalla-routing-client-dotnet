@@ -152,9 +152,9 @@ See [samples/README.md](samples/README.md) for detailed documentation.
 
 ### For Developers Using This Library
 
-- 📖 **API Documentation** - *Coming soon*
-- 💡 **Examples** - See [samples/](samples/) directory
-- 🔗 **Valhalla API Docs** - [valhalla.github.io/valhalla/api](https://valhalla.github.io/valhalla/api/)
+- 📖 **API Documentation** - Available through IntelliSense with comprehensive XML documentation on all public APIs. The library generates full XML documentation files for IDE integration.
+- 💡 **Examples** - See [samples/](samples/) directory for practical usage examples covering all endpoints
+- 🔗 **Valhalla API Docs** - [valhalla.github.io/valhalla/api](https://valhalla.github.io/valhalla/api/) - For understanding the underlying Valhalla routing engine API
 
 ### For Contributors
 
