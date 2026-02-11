@@ -476,6 +476,67 @@ Once your PR is approved:
 - 💬 **Discussions** - Ask questions in [GitHub Discussions](https://github.com/elliveny/valhalla-routing-client-dotnet/discussions)
 - 🐛 **Issues** - Report bugs or request features via [GitHub Issues](https://github.com/elliveny/valhalla-routing-client-dotnet/issues)
 
+## Release Process
+
+This section is for maintainers who create releases.
+
+### Version Numbering
+
+This project follows [Semantic Versioning](https://semver.org/):
+- **MAJOR** version for incompatible API changes
+- **MINOR** version for backward-compatible functionality additions
+- **PATCH** version for backward-compatible bug fixes
+
+### Creating a Release
+
+1. **Update Version Numbers**
+   - Update `<Version>` in `src/Valhalla.Routing.Client/Valhalla.Routing.Client.csproj`
+   - Update `<Version>` in `Directory.Build.props` (in the `IsPackable` condition)
+   - Both files must have the **same version number**
+
+2. **Update CHANGELOG.md**
+   - Add a new section for the version with release date
+   - Document all changes (Added, Changed, Fixed, etc.)
+   - Update the comparison links at the bottom
+
+3. **Create and Push PR**
+   - Create a PR with version bump and changelog updates
+   - Get the PR reviewed and merged to main
+
+4. **Create Git Tag**
+   After the PR is merged to main:
+   ```bash
+   git checkout main
+   git pull
+   git tag v0.1.x  # Replace with actual version
+   git push origin v0.1.x
+   ```
+
+5. **Automated Publishing**
+   - The `publish.yml` workflow will automatically trigger when the tag is pushed
+   - It will:
+     - Build the project
+     - Run tests
+     - Pack the NuGet package
+     - Push to NuGet.org
+     - Create a GitHub release
+
+6. **Verify Release**
+   - Check that the package appears on [NuGet.org](https://www.nuget.org/packages/Valhalla.Routing.Client)
+   - Verify the GitHub release was created
+   - Test the published package
+
+### Manual Release (if needed)
+
+If the automated workflow fails, you can manually trigger it:
+
+```bash
+# Using GitHub CLI
+gh workflow run publish.yml -f version=0.1.x
+
+# Or use the GitHub UI: Actions → Publish to NuGet → Run workflow
+```
+
 ## Thank You!
 
 Your contributions make this project better for everyone. We appreciate your time and effort! 🎉
