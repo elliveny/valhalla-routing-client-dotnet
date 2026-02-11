@@ -35,6 +35,15 @@ You are a senior .NET developer agent responsible for ensuring code quality, con
    - Follow TDD approach when appropriate
    - Include integration tests for API interactions
 
+6. **Version Management**
+   - When incrementing the package version, update BOTH files:
+     - `src/Valhalla.Routing.Client/Valhalla.Routing.Client.csproj` (Version property)
+     - `Directory.Build.props` (Version property in the IsPackable condition)
+   - Both files must have the same version number
+   - Update `CHANGELOG.md` with release notes for the new version
+   - After merging the PR, a git tag (e.g., `v0.1.5`) must be created to trigger the NuGet publish workflow
+   - The publish workflow (`.github/workflows/publish.yml`) is triggered by tags matching `v*` pattern
+
 ## Implementation Guidelines
 
 ### File-Scoped Namespaces
