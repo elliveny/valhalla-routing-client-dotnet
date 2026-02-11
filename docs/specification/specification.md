@@ -1480,11 +1480,19 @@ public record TraceEdge
 {
     public IReadOnlyList<string>? Names { get; init; }
     public double? Length { get; init; }         // In units specified
-    public double? Speed { get; init; }          // km/h
+    public double? Speed { get; init; }          // Routing/traversal speed in km/h
+    public double? SpeedLimit { get; init; }     // Posted speed limit in km/h
     public string? RoadClass { get; init; }
     public int? BeginShapeIndex { get; init; }
     public int? EndShapeIndex { get; init; }
     public int? TrafficSegments { get; init; }
+    public long? WayId { get; init; }            // OpenStreetMap way identifier
+    public long? Id { get; init; }               // Valhalla's internal edge identifier
+    public string? Use { get; init; }            // Use classification (road, ramp, ferry, cycleway, etc.)
+    public string? Surface { get; init; }        // Surface type (paved, gravel, etc.)
+    public bool? Toll { get; init; }             // Whether the edge has a toll
+    public bool? Tunnel { get; init; }           // Whether the edge is a tunnel
+    public bool? Bridge { get; init; }           // Whether the edge is a bridge
 }
 ```
 

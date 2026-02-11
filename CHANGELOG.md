@@ -8,33 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial project structure and documentation
-- Comprehensive specification document
-- .NET best practices guidelines
-- Testing guidelines document
-- Interface design templates
-- Quick reference guide
-- EditorConfig, Directory.Build.props, and StyleCop configuration
-- MIT LICENSE file
-- Comprehensive documentation review
-- Complete implementation of all Valhalla API endpoints:
-  - Status endpoint for server health checks
-  - Locate endpoint for finding nearest roads
-  - Route endpoint for calculating routes between locations
-  - TraceRoute endpoint for GPS trace matching
-  - TraceAttributes endpoint for extracting edge attributes
-- Polyline encoding/decoding utilities (precision 6)
-- Dependency injection support via `AddValhallaClient()`
-- Builder pattern for non-DI scenarios via `ValhallaClientBuilder`
-- Comprehensive sample applications demonstrating all features:
-  - ServerHealthCheckSample - Server status and version check
-  - BasicRoutingSample - Simple routing between two points
-  - MultiStopRouteSample - Multi-waypoint routing
-  - NearestRoadSample - Locate nearest road to coordinates
-  - GpsTraceMatchingSample - GPS trace matching to road network
-  - TraceAttributesSample - Extract detailed edge attributes
-- Sample project with dependency injection setup
-- Samples README with usage instructions
+- N/A
 
 ### Changed
 - N/A
@@ -54,6 +28,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## Release History
+
+### [0.1.5] - 2026-02-11
+
+Enhanced TraceEdge with additional edge properties:
+- Added `SpeedLimit` property (posted speed limit, distinct from routing speed)
+- Added `WayId` property (OpenStreetMap way identifier for OSM correlation)
+- Added `Id` property (Valhalla's internal edge identifier)
+- Added `Use` property (road use classification: road, ramp, ferry, cycleway, etc.)
+- Added `Surface` property (surface type: paved, gravel, etc.)
+- Added `Toll` property (whether the edge has a toll)
+- Added `Tunnel` property (whether the edge is a tunnel)
+- Added `Bridge` property (whether the edge is a bridge)
+- Updated specification documentation to reflect new properties
 
 ### [0.1.4] - 2026-02-09
 
@@ -90,7 +77,8 @@ Initial release with support for:
 - Comprehensive XML documentation
 - .NET 6.0 and .NET 8.0 support
 
-[Unreleased]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/elliveny/valhalla-routing-client-dotnet/compare/v0.1.1...v0.1.2

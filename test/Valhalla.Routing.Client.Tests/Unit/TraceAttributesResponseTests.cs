@@ -204,4 +204,99 @@ public class TraceAttributesResponseTests
         response.Edges.Should().NotBeNull();
         response.Edges.Should().BeEmpty();
     }
+
+    [Fact]
+    public void TraceAttributesResponse_Deserializes_ExtendedEdgeProperties()
+    {
+        // Arrange
+        var json = """
+        {
+          "edges": [
+            {
+              "length": 0.543,
+              "speed": 50,
+              "speed_limit": 60,
+              "road_class": "secondary",
+              "begin_shape_index": 0,
+              "end_shape_index": 12,
+              "names": ["Main Street"],
+              "way_id": 123456789,
+              "id": 987654321,
+              "use": "road",
+              "surface": "paved",
+              "toll": false,
+              "tunnel": false,
+              "bridge": true
+            },
+            {
+              "length": 0.2,
+              "speed": 30,
+              "speed_limit": 40,
+              "road_class": "service",
+              "use": "ramp",
+              "surface": "gravel",
+              "toll": true,
+              "tunnel": true,
+              "bridge": false,
+              "way_id": 111222333
+            }
+          ],
+          "units": "kilometers"
+        }
+        """;
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance,
+            PropertyNameCaseInsensitive = true,
+        };
+
+        // Act
+        using var doc = JsonDocument.Parse(json);
+        var root = doc.RootElement;
+
+        IReadOnlyList<TraceEdge>? edges = null;
+        if (root.TryGetProperty("edges", out var edgesElement))
+        {
+            edges = JsonSerializer.Deserialize<List<TraceEdge>>(edgesElement.GetRawText(), options);
+        }
+
+        var response = new TraceAttributesResponse
+        {
+            Raw = root.Clone(),
+            Edges = edges,
+        };
+
+        // Assert
+        response.Edges.Should().NotBeNull();
+        response.Edges.Should().HaveCount(2);
+
+        var edge1 = response.Edges![0];
+        edge1.Length.Should().Be(0.543);
+        edge1.Speed.Should().Be(50);
+        edge1.SpeedLimit.Should().Be(60);
+        edge1.RoadClass.Should().Be("secondary");
+        edge1.BeginShapeIndex.Should().Be(0);
+        edge1.EndShapeIndex.Should().Be(12);
+        edge1.Names.Should().ContainSingle().Which.Should().Be("Main Street");
+        edge1.WayId.Should().Be(123456789);
+        edge1.Id.Should().Be(987654321);
+        edge1.Use.Should().Be("road");
+        edge1.Surface.Should().Be("paved");
+        edge1.Toll.Should().BeFalse();
+        edge1.Tunnel.Should().BeFalse();
+        edge1.Bridge.Should().BeTrue();
+
+        var edge2 = response.Edges[1];
+        edge2.Length.Should().Be(0.2);
+        edge2.Speed.Should().Be(30);
+        edge2.SpeedLimit.Should().Be(40);
+        edge2.RoadClass.Should().Be("service");
+        edge2.Use.Should().Be("ramp");
+        edge2.Surface.Should().Be("gravel");
+        edge2.Toll.Should().BeTrue();
+        edge2.Tunnel.Should().BeTrue();
+        edge2.Bridge.Should().BeFalse();
+        edge2.WayId.Should().Be(111222333);
+    }
 }

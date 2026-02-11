@@ -16,9 +16,14 @@ public record TraceEdge
     public double? Length { get; init; }
 
     /// <summary>
-    /// Gets the speed limit or average speed in kilometers per hour.
+    /// Gets the routing/traversal speed in kilometers per hour.
     /// </summary>
     public double? Speed { get; init; }
+
+    /// <summary>
+    /// Gets the posted speed limit in kilometers per hour.
+    /// </summary>
+    public double? SpeedLimit { get; init; }
 
     /// <summary>
     /// Gets the road classification. Examples: "motorway", "primary", "secondary", "residential".
@@ -39,4 +44,40 @@ public record TraceEdge
     /// Gets the number of traffic segments for this edge.
     /// </summary>
     public int? TrafficSegments { get; init; }
+
+    /// <summary>
+    /// Gets the OpenStreetMap way identifier for this edge.
+    /// Useful for correlating edges back to OSM data.
+    /// </summary>
+    public long? WayId { get; init; }
+
+    /// <summary>
+    /// Gets Valhalla's internal edge identifier.
+    /// </summary>
+    public long? Id { get; init; }
+
+    /// <summary>
+    /// Gets the use classification of the road (e.g., road, ramp, ferry, cycleway).
+    /// </summary>
+    public string? Use { get; init; }
+
+    /// <summary>
+    /// Gets the surface type (e.g., paved, gravel).
+    /// </summary>
+    public string? Surface { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether the edge has a toll.
+    /// </summary>
+    public bool? Toll { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether the edge is a tunnel.
+    /// </summary>
+    public bool? Tunnel { get; init; }
+
+    /// <summary>
+    /// Gets a value indicating whether the edge is a bridge.
+    /// </summary>
+    public bool? Bridge { get; init; }
 }
