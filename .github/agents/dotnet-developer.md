@@ -41,8 +41,13 @@ You are a senior .NET developer agent responsible for ensuring code quality, con
      - `Directory.Build.props` (Version property in the IsPackable condition)
    - Both files must have the same version number
    - Update `CHANGELOG.md` with release notes for the new version
-   - After merging the PR, a git tag (e.g., `v0.1.5`) must be created to trigger the NuGet publish workflow
-   - The publish workflow (`.github/workflows/publish.yml`) is triggered by tags matching `v*` pattern
+   - **CRITICAL**: Creating a git tag is REQUIRED to publish to NuGet:
+     - The publish workflow (`.github/workflows/publish.yml`) is triggered by tags matching `v*` pattern
+     - After the PR is merged, a git tag (e.g., `v0.1.5`) MUST be manually created by the repository owner
+     - **NOTE**: Agents cannot create git tags directly - inform the user that a tag needs to be created
+     - The tag should match the version in format `v{VERSION}` (e.g., `v0.1.5` for version 0.1.5)
+     - Command for reference: `git tag v0.1.5 && git push origin v0.1.5`
+   - Without the git tag, the NuGet package will NOT be published even if version files are updated
 
 ## Implementation Guidelines
 
