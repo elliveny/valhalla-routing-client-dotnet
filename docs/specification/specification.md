@@ -8,6 +8,18 @@
 
 **Scope:** Supports 5 core endpoints: route, trace_route, trace_attributes, status, and locate. Multi-target .NET 6.0/8.0.
 
+**Status:** ✅ **Production Ready** - All core endpoints have been implemented and tested. The API surface is stable. Currently in pre-release (v0.x) with stable API that may have minor refinements before v1.0.
+
+**Key Features:**
+- 🔄 **Thread-safe** - Designed for concurrent usage in ASP.NET Core applications
+- 💉 **Dependency Injection** - First-class support for DI with `IServiceCollection` extensions
+- 🔧 **Builder Pattern** - Non-DI scenarios supported via fluent builder API
+- 📝 **Comprehensive Documentation** - Extensive XML documentation for IntelliSense
+- 🛡️ **Robust Error Handling** - Detailed exception types for different failure scenarios
+- 🔒 **Security-Conscious** - API key redaction in logs, response size limits, DoS protection
+- ⚡ **Modern .NET** - Leverages latest C# features and async/await patterns
+- 🧪 **Well-Tested** - High test coverage with both unit and integration tests (78+ tests)
+
 **Key Principles:**
 - **Forward compatible:** Use `JsonElement` for flexibility as Valhalla API evolves
 - **Production ready:** Thread-safe, DI-integrated, comprehensive error handling, security-conscious (DoS protection, API key redaction)
@@ -19,6 +31,68 @@
 - `JsonElement.Clone()` required for all `Raw` properties (memory safety)
 - API keys applied per-request, never logged
 - Distinguish timeout from cancellation in exception handling
+
+---
+
+## Development Philosophy & Approach
+
+### AI-Driven Development Experiment
+
+This project represents an experiment in **specification-driven development using AI tools**. The entire codebase—from design to implementation—was created through a collaborative process between AI assistants and human review.
+
+**Development Timeline:**
+- **Day 1:** Initial specification.md created using ChatGPT, then refined through multiple rounds of review using GitHub Copilot (Claude Opus 4.5 model)
+- **Days 2-3:** Phased implementation with continuous agent and human review at each stage
+- **Post-development:** Agent review validated specification against code, resulting in refinements to both
+
+### This Specification is the Source of Truth
+
+**This document serves as the definitive, authoritative source for all design and implementation decisions in this project.**
+
+#### Why This Matters
+
+1. **Single Source of Truth** - The specification defines what the code should do and how it should be structured
+2. **Maintainability** - Future developers (and AI assistants) can understand the complete system from the specification
+3. **Consistency** - Design decisions are documented and can be referenced during implementation
+4. **Regenerability** - The codebase can theoretically be regenerated from the specification using AI tools
+5. **Specification leads development** - Changes to requirements should update the specification first
+6. **Code follows specification** - Implementation should be derived from the specification document
+7. **Continuous evolution** - Both specification and code evolve together, with the specification maintaining the authoritative design
+
+### AI-Assisted Workflow (Recommended)
+
+This project encourages contributors to leverage AI tools for implementation:
+
+**Recommended Workflow for Contributors:**
+
+1. **Update Specification First**
+   - Propose changes to this specification document before writing code
+   - Ensure the specification clearly describes the intended behavior
+   - Get specification changes reviewed and approved
+
+2. **AI-Assisted Implementation**
+   - Use AI coding assistants (GitHub Copilot, Cursor, ChatGPT, Claude, etc.) to generate implementation from the updated specification
+   - Let AI tools handle boilerplate, tests, and documentation generation
+   - Review AI-generated code carefully for correctness and quality
+
+3. **Human Review**
+   - Always review AI-generated changes with human judgment
+   - Verify security, performance, and correctness
+   - Ensure changes align with project standards
+
+4. **Iterative Refinement**
+   - Use AI tools to address review feedback
+   - Refine both code and specification as needed
+   - Maintain alignment between specification and implementation
+
+**Important Notes:**
+- Human-written code is perfectly acceptable and encouraged
+- You are not required to use AI tools to contribute
+- AI output must never be merged without thorough human review
+- Consider how changes fit into the specification
+- Documentation-first thinking is highly valued
+
+💡 **For Contributors:** When proposing changes, consider updating this specification first. See [CONTRIBUTING.md](../../CONTRIBUTING.md) for details on the recommended workflow.
 
 ---
 
@@ -50,8 +124,9 @@
 18. [Recommended Repository Structure](#18-recommended-repository-structure)
 19. [Notes for Future Phases](#19-notes-for-future-phases-non-mvp)
 20. [Developer Notes / Priorities](#20-developer-notes--priorities)
-21. [Glossary](#21-glossary)
-22. [Development Phases (TDD Approach)](#22-development-phases-tdd-approach)
+21. [Contributor Workflow & Specification-First Development](#21-contributor-workflow--specification-first-development)
+22. [Glossary](#22-glossary)
+23. [Development Phases (TDD Approach)](#23-development-phases-tdd-approach)
 
 ---
 
@@ -203,6 +278,103 @@ The package should include metadata for discoverability:
 - `PackageLicenseExpression`
 - `PackageReadmeFile`
 
+### 4.8 Installation & Package Distribution
+
+#### Installation Command
+The README and documentation should prominently feature the installation command:
+
+```bash
+dotnet add package Valhalla.Routing.Client
+```
+
+Or via Package Manager Console:
+```
+Install-Package Valhalla.Routing.Client
+```
+
+#### NuGet Package Badge
+Include a NuGet version badge in the README for visibility:
+
+```markdown
+[![NuGet](https://img.shields.io/nuget/v/Valhalla.Routing.Client.svg)](https://www.nuget.org/packages/Valhalla.Routing.Client)
+```
+
+#### Pre-release Status Communication
+The package is currently in **pre-release (v0.x)** phase:
+
+- Version numbers follow `0.x.y` pattern during pre-release
+- The API surface is stable but may have minor refinements before v1.0
+- Breaking changes are possible but will be clearly communicated in release notes
+- Users should be informed: "Pre-release: This library is in active development (0.x). The API is stable but may have minor changes before v1.0. Feedback welcome!"
+
+Once the API is fully stable and field-tested:
+- Version will be bumped to `1.0.0`
+- Semantic versioning will be strictly followed for all future releases
+
+#### Target Frameworks in Package
+The NuGet package must support:
+- **.NET 6.0** (netcoreapp6.0) - Long-term support
+- **.NET 8.0** (netcoreapp8.0) - Current recommended version
+
+This should be configured in the `.csproj` file:
+```xml
+<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+```
+
+#### Package Dependencies
+The NuGet package will have minimal dependencies:
+- **System.Text.Json** - Built into .NET runtime (no explicit package reference needed)
+- **Microsoft.Extensions.Logging.Abstractions** - For ILogger<T> interface
+- **Microsoft.Extensions.Options** - For IOptions<T> pattern
+- **Microsoft.Extensions.DependencyInjection.Abstractions** - For service collection extensions
+
+Note: These are *abstractions only*. Consumers provide their own implementations (e.g., Microsoft.Extensions.Logging.Console).
+
+#### Package Icon and Metadata
+Include in the `.csproj`:
+```xml
+<PackageIcon>icon.png</PackageIcon>
+<PackageReadmeFile>README.md</PackageReadmeFile>
+<PackageProjectUrl>https://github.com/elliveny/valhalla-routing-client-dotnet</PackageProjectUrl>
+<RepositoryUrl>https://github.com/elliveny/valhalla-routing-client-dotnet</RepositoryUrl>
+<RepositoryType>git</RepositoryType>
+<PackageLicenseExpression>MIT</PackageLicenseExpression>
+<PackageTags>valhalla;routing;navigation;maps;gis;directions</PackageTags>
+<Description>A production-ready .NET client library for the Valhalla routing engine HTTP API. Supports route calculation, map matching, status checks, and location queries.</Description>
+```
+
+#### NuGet Publishing Process
+The package should be published via CI/CD automation:
+
+1. **Automated Publishing:**
+   - Trigger on Git tags (e.g., `v0.1.0`, `v1.0.0`)
+   - GitHub Actions workflow builds, tests, and packages the library
+   - Workflow publishes to NuGet.org using API key stored in GitHub Secrets
+
+2. **Manual Review Before Release:**
+   - All tests must pass (unit + integration)
+   - Code quality checks must pass (StyleCop, analyzers)
+   - Release notes must be prepared in CHANGELOG.md
+   - Version number must be updated in `.csproj`
+
+3. **Release Checklist:**
+   - [ ] Update version in `.csproj`
+   - [ ] Update CHANGELOG.md with release notes
+   - [ ] Ensure all tests pass
+   - [ ] Ensure no compiler warnings
+   - [ ] Create and push Git tag
+   - [ ] Verify GitHub Actions workflow completes successfully
+   - [ ] Verify package appears on NuGet.org
+   - [ ] Test installation in a clean project
+
+#### Quick Start Documentation
+The README must include a clear "Quick Start" section showing:
+1. Installation command
+2. Basic usage with Dependency Injection (ASP.NET Core)
+3. Basic usage without Dependency Injection (using builder pattern)
+
+This ensures users can get started immediately after installing the package.
+
 ---
 
 ## 5. Project Deliverables
@@ -216,10 +388,34 @@ The solution must include:
 
 ### 5.2 Documentation
 Required documentation files:
-- `README.md`
-- `CHANGELOG.md` (optional but recommended)
-- `LICENSE`
+- `README.md` - Project overview, installation, quick start, and usage examples
+- `CHANGELOG.md` (optional but recommended) - Version history and release notes
+- `LICENSE` - MIT License
 - This specification document (optional to include publicly)
+
+### 5.3 NuGet Package Deliverable
+The project must produce a NuGet package suitable for public distribution:
+
+**Package Output:**
+- `Valhalla.Routing.Client.{version}.nupkg`
+- Includes compiled assemblies for .NET 6.0 and .NET 8.0
+- Includes XML documentation files for IntelliSense
+- Includes package icon (icon.png)
+- Includes README.md as package readme
+
+**Package Metadata Requirements:**
+All metadata must be configured in `.csproj` (see Section 4.8 for complete details):
+- Package version
+- Package description
+- Package tags for discoverability
+- License expression (MIT)
+- Project and repository URLs
+- Package icon and readme file references
+
+**Distribution:**
+- Published to NuGet.org
+- Available via `dotnet add package Valhalla.Routing.Client`
+- Searchable by tags: valhalla, routing, navigation, maps, gis, directions
 
 ---
 
@@ -2367,18 +2563,101 @@ jobs:
 
 The README must include:
 
-- short description
-- statement that it is unofficial
-- supported endpoints list
-- install instructions (NuGet)
-- usage examples:
-  - Route
-  - TraceRoute
-  - TraceAttributes
-  - Status
-  - Locate
-- configuration example
-- link to Valhalla docs
+### Basic Information
+- Short description of the library
+- **Explicit statement that it is unofficial** - "This is an unofficial client library and is not affiliated with or endorsed by the Valhalla project"
+- Current project status: "✅ Production Ready - All core endpoints have been implemented and tested. The API surface is stable."
+- Pre-release version notice: "Pre-release: This library is in active development (0.x). The API is stable but may have minor changes before v1.0. Feedback welcome!"
+
+### Installation & Quick Start
+- **NuGet installation instructions** - Prominent display of `dotnet add package Valhalla.Routing.Client` command
+- NuGet badge with version and link: `[![NuGet](https://img.shields.io/nuget/v/Valhalla.Routing.Client.svg)](https://www.nuget.org/packages/Valhalla.Routing.Client)`
+- Target frameworks (.NET 6.0, .NET 8.0)
+- Quick start code examples:
+  - With Dependency Injection (ASP.NET Core)
+  - Without Dependency Injection (using builder pattern)
+
+### Supported Endpoints
+List with checkmarks:
+- ✅ **Route** (`/route`) - Calculate optimal routes between locations
+- ✅ **Map Matching** (`/trace_route`, `/trace_attributes`) - Match GPS traces to road networks
+- ✅ **Status** (`/status`) - Check service health and version
+- ✅ **Locate** (`/locate`) - Find nearest roads to a location
+
+### Features Highlight
+Emphasize key features:
+- 🔄 Thread-safe
+- 💉 Dependency Injection support
+- 🔧 Builder Pattern for non-DI scenarios
+- 📝 Comprehensive Documentation
+- 🛡️ Robust Error Handling
+- 🔒 Security-Conscious (API key redaction, DoS protection)
+- ⚡ Modern .NET (async/await)
+- 🧪 Well-Tested (unit + integration tests)
+
+### Usage Examples
+Include code examples for:
+- Route calculation
+- TraceRoute (GPS trace matching)
+- TraceAttributes (edge attributes extraction)
+- Status check
+- Locate (nearest road lookup)
+- Configuration options
+
+### About This Project: AI-Driven Development
+
+**Critical:** The README must clearly communicate the project's unique development approach:
+
+#### Section: "AI-Driven Development Experiment"
+Include a prominent section explaining:
+
+1. **What makes this project unique:**
+   - Entire codebase created through AI-assisted development (ChatGPT, GitHub Copilot with Claude Opus 4.5)
+   - Specification-driven approach where specification.md is the definitive source of truth
+   - Experimental approach to demonstrate AI-assisted coding at scale
+
+2. **Development Philosophy:**
+   - Specification leads development - changes should update specification.md first
+   - Code follows specification - implementation derived from specification
+   - Continuous evolution - both spec and code evolve together
+   - AI-assisted workflow encouraged - leverage AI tools to translate spec to code
+
+3. **For Contributors:**
+   - Direct contributors to CONTRIBUTING.md for detailed workflow
+   - Emphasize: "When proposing changes, consider updating specification.md first"
+   - Note that AI tool usage is encouraged but human review is essential
+   - Link to specification.md as the authoritative design document
+
+**Example wording from current README:**
+```markdown
+### AI-Driven Development Experiment
+
+This project represents an experiment in **specification-driven development using AI tools**. 
+The entire codebase—from design to implementation—was created through a collaborative process 
+between AI assistants and human review.
+
+**Key Philosophy:**
+
+The [specification.md](docs/specification/specification.md) file serves as the **definitive 
+source of truth** for this project. Changes to requirements should update the specification 
+first, and implementation should be derived from the specification document.
+
+💡 **For Contributors:** When proposing changes, consider updating specification.md first. 
+See our [contribution guidelines](CONTRIBUTING.md) for details on the recommended workflow.
+```
+
+### Documentation Links
+- Link to [specification.md](docs/specification/specification.md) - Emphasize this is the definitive source of truth
+- Link to [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines with AI-assisted workflow
+- Link to other documentation in /docs directory
+- Link to Valhalla API documentation: https://valhalla.github.io/valhalla/api/
+
+### Development & Contributing
+- Development setup instructions
+- Build and test commands
+- Link to CONTRIBUTING.md with emphasis on specification-first workflow
+- Code quality standards
+- License information (MIT)
 
 ---
 
@@ -2605,7 +2884,145 @@ This order allows you to build confidence incrementally and reuse patterns learn
 
 ---
 
-## 21. Glossary
+## 21. Contributor Workflow & Specification-First Development
+
+### Overview
+
+This project follows a **specification-first development workflow** where this document serves as the authoritative source for all design and implementation decisions.
+
+### When to Update This Specification
+
+Contributors should update this specification document in the following scenarios:
+
+**Always Update Specification:**
+- Adding new endpoints or features
+- Changing public API surface (interfaces, method signatures)
+- Modifying request/response models
+- Changing configuration options or behavior
+- Adding new dependencies or requirements
+- Updating error handling patterns
+- Modifying security or performance requirements
+
+**May Not Need Specification Update:**
+- Fixing bugs that don't change documented behavior
+- Adding tests for existing functionality
+- Refactoring internal implementation without changing public API
+- Updating documentation that doesn't affect design decisions
+- Adding samples or examples
+
+**If Unsure:** Update the specification. It's better to document design decisions even if they seem minor.
+
+### Recommended Contribution Workflow
+
+#### Step 1: Review Current Specification
+- Read this specification document completely before proposing changes
+- Understand the current design and implementation details
+- Identify which sections your change affects
+
+#### Step 2: Propose Specification Update
+- Fork the repository and create a feature branch
+- Update the relevant sections of this specification document
+- Be specific about what changes and why
+- Include examples if adding new features
+- Ensure changes align with existing design principles
+
+#### Step 3: Get Specification Review
+- Submit a pull request with specification changes
+- Request review from maintainers
+- Discuss design decisions before implementation
+- Iterate on specification until approved
+
+#### Step 4: Implement Changes (AI-Assisted)
+- Once specification is approved, begin implementation
+- **AI tools encouraged:** Use GitHub Copilot, Cursor, ChatGPT, Claude, or other AI assistants to:
+  - Generate code from specification
+  - Create unit and integration tests
+  - Generate XML documentation
+  - Handle boilerplate and repetitive tasks
+- Follow the patterns established in existing code
+- Reference this specification throughout implementation
+
+#### Step 5: Human Review & Refinement
+- **Critical:** Always review AI-generated code with human judgment
+- Verify security considerations (API key handling, DoS protection, input validation)
+- Verify performance implications
+- Verify correctness against specification
+- Ensure code follows project standards (see docs/dotnet-best-practices.md)
+- Run all tests (unit + integration)
+- Ensure zero compiler warnings
+
+#### Step 6: Submit Implementation PR
+- Submit pull request with implementation
+- Reference the specification sections that guided implementation
+- Include test results and coverage information
+- Link to the earlier specification PR if applicable
+
+#### Step 7: Address Review Feedback
+- Use AI tools to help address feedback efficiently
+- Update both code and specification if design needs refinement
+- Maintain alignment between specification and implementation
+- Re-run tests after changes
+
+### Benefits of This Workflow
+
+**For Contributors:**
+- Clear guidance on what to build
+- Reduced back-and-forth during code review
+- Leverage AI tools effectively with clear specifications
+- Learn project design patterns before coding
+
+**For Maintainers:**
+- Design discussions happen before implementation work begins
+- Easier to review code when specification exists
+- Maintain consistency across contributions
+- Ensure documentation stays current
+
+**For the Project:**
+- Specification remains the single source of truth
+- Design decisions are documented and traceable
+- Codebase can be regenerated or refactored from specification
+- New contributors can understand design quickly
+
+### AI-Assisted Development Best Practices
+
+When using AI tools for implementation:
+
+**Do:**
+- ✅ Start with clear specifications
+- ✅ Use AI to generate boilerplate and tests
+- ✅ Review all AI-generated code carefully
+- ✅ Verify security and correctness
+- ✅ Use AI to help address code review feedback
+- ✅ Maintain human oversight at all times
+
+**Don't:**
+- ❌ Accept AI output without review
+- ❌ Skip testing AI-generated code
+- ❌ Let AI make design decisions that contradict the specification
+- ❌ Merge AI code that you don't fully understand
+- ❌ Use AI to rush through security-critical code
+
+### Questions and Support
+
+For questions about:
+- **Design decisions:** Open a GitHub Discussion before submitting specification changes
+- **Implementation details:** Refer to this specification first, then ask in Discussions
+- **Bugs:** Report via GitHub Issues
+- **Contributing process:** See CONTRIBUTING.md for complete guidelines
+
+### Reference Documents
+
+Contributors should be familiar with:
+- **This Specification** (specification.md) - Authoritative design document
+- **CONTRIBUTING.md** - Contribution guidelines and code of conduct
+- **.NET Best Practices** (docs/dotnet-best-practices.md) - Coding standards
+- **Testing Guidelines** (docs/testing-guidelines.md) - Unit and integration test patterns
+- **Interface Design Template** (docs/interface-design-template.md) - Interface patterns
+- **Quick Reference** (docs/quick-reference.md) - Common patterns cheat sheet
+
+---
+
+## 22. Glossary
 
 | Term | Definition |
 |------|------------|
@@ -2622,7 +3039,7 @@ This order allows you to build confidence incrementally and reuse patterns learn
 
 ---
 
-## 22. Development Phases (TDD Approach)
+## 23. Development Phases (TDD Approach)
 
 This section defines the recommended development sequence using Test-Driven Development. Each phase specifies required tests that serve as acceptance criteria. **Tests should be written before implementation code.**
 
