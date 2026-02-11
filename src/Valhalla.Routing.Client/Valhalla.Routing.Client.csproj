@@ -13,7 +13,7 @@
 
   <!-- Package metadata -->
   <PropertyGroup>
-    <Version>0.1.4</Version>
+    <Version>0.1.5</Version>
     <Authors>Elliveny</Authors>
     <Company>Elliveny</Company>
     <Product>Valhalla Routing Client for .NET</Product>
